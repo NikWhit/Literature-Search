@@ -1,0 +1,59 @@
+const { Book, User } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
+
+const resolvers = {
+    Query: {
+        getSingleUser: async (parent, {username}) => {
+            const foundUser =await User.findOne({
+                username: username});
+            if(!foundUser) {
+            return 'No user with this id found';
+            }
+            return foundUser;
+            }
+        },
+        Mutation: {
+            createUser: async (parent, { username, email, password}) => {
+                const user = await User.create({ username, email, password});
+                const token = signToken(user);
+                return {token, user};
+            },
+            saveBook: async (parent, {_id, body}) => {
+                const saveBook = await User.findOneAndUpdate(
+                    {_id: _id},
+                {$addToSet: {savedBooks: body}},
+                {new: true}
+                );
+            return saveBook;
+            },
+        login: async (parent, {email, password}) => {
+            const user = await User.findOne({email});
+            if(!user) {
+                throw AuthenticationError;
+            }
+        const correctPw = await user.isCorrectPassword(password);
+        if(!correctPw) {
+            throw AuthenticationError;
+        }
+
+        const token = signToken(user);
+        return {token, user};
+        },
+        deleteBook: async (parent, {_id, deleteId }, context) => {
+            if (context) {
+            const updatedUser = await User.findOneAndUpdate(
+                    { _id: _id },
+                    { $pull: { savedBooks: { bookId: deleteId } } },
+                    { new: true }
+                );
+                if (!updatedUser) {
+                    return "Couldn't find user with this id!";
+                }
+                return updatedUser;
+                }
+                throw AuthenticationError;
+                }
+            },
+            };
+            
+            module.exports = resolvers;
