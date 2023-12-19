@@ -2,9 +2,8 @@ const express = require('express');
 const { ApolloServer } = require('@apollo/server');
 const { expressMiddleware } = require('@apollo/server/express4');
 const path = require('path');
-const {typeDefs, resolvers } = requrie('./schemas');
+const {typeDefs, resolvers } = require('./schemas');
 const db = require('./config/connection');
-const routes = require('./routes'); //might not need
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -27,8 +26,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 }
-
-app.use(routes); //may not need
 
 db.once('open', () => {
   app.listen(PORT, () => {
