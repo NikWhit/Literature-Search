@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react';
+import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 import { useMutation } from '@apollo/client';
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-  Row
-} from 'react-bootstrap';
-
 import Auth from '../utils/auth';
-import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchGoogleBooks } from '../utils/API';
 import { saveBookIds, getSavedBookIds } from '../utils/localStorage';
 import { SAVE_BOOK } from '../utils/mutations';
 
@@ -19,6 +11,7 @@ const SearchBooks = () => {
   const [searchedBooks, setSearchedBooks] = useState([]);
   // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
+  const [saveBook] = useMutation(SAVE_BOOK);
 
   // create state to hold saved bookId values
   const [savedBookIds, setSavedBookIds] = useState(getSavedBookIds());
@@ -74,12 +67,14 @@ const SearchBooks = () => {
     }
     const user = Auth.getProfile();
     try {
-      const response = await saveBook({
+      const { data } = await saveBook({
         variables: {
+          bookData: { ...bookToSave},
           id: user.data._id,
           body: bookToSave
         },
       }, token);
+      console.log(data)
       //hopefully the book saves to the user's account
       setSavedBookIds([...savedBookIds, bookToSave.bookId]);
     } catch (err) {

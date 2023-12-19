@@ -16,7 +16,7 @@ const SavedBooks = () => {
   const {loading, data} = useQuery(GET_USER, {
     variables: {username: user.data.username},
   });
-  const[deleteBook, {error}] = useMutation(DELETE_BOOK, {
+  const[deleteBook,] = useMutation(DELETE_BOOK, {
     fetchedQueries: [
       {
         query: GET_USER,
@@ -40,13 +40,13 @@ const SavedBooks = () => {
     }
 
     try {
-      const response = await deleteBook({
+      const { data } = await deleteBook({
         variables: {
           id: user.data._id,
-          deleteId: bookID
+          deleteId: bookId
         },
       }, token);
-
+      console.log(data)
 
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
@@ -62,7 +62,7 @@ const SavedBooks = () => {
 
   return (
     <>
-      <div fluid className="text-light bg-dark p-5">
+      <div style="fluid" className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing saved books!</h1>
         </Container>
@@ -76,8 +76,8 @@ const SavedBooks = () => {
         <Row>
           {userData.savedBooks.map((book) => {
             return (
-              <Col md="4">
-                <Card key={book.bookId} border='dark'>
+              <Col key={book.bookId}  md="4">
+                <Card border='dark'>
                   {book.image ? <Card.Img src={book.image} alt={`The cover for ${book.title}`} variant='top' /> : null}
                   <Card.Body>
                     <Card.Title>{book.title}</Card.Title>
