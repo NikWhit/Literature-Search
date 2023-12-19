@@ -14,11 +14,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.10.5",
     "concurrently": "^5.1.0",
-    "eslint-plugin-react-hooks": "^4.6.0"
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",
     "graphql": "^16.8.1"
-  }
+  },
+  "type": "module"
 }

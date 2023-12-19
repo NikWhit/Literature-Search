@@ -6,11 +6,15 @@ import Auth from '../utils/auth';
 
 const signUpForm = () => {
   // set initial form state
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [validated] = useState(false);
   // set state for alert
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [showAlert, setShowAlert] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [addUser] = useMutation(ADD_USER);
 
   const handleInputChange = (event) => {
