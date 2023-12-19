@@ -17,7 +17,7 @@ const SavedBooks = () => {
     variables: {username: user.data.username},
   });
   const[deleteBook, {error}] = useMutation(DELETE_BOOK, {
-    refetchedQueries: [
+    fetchedQueries: [
       {
         query: GET_USER,
         variables: { username: user.data.username}

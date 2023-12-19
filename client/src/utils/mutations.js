@@ -1,5 +1,4 @@
 import {gql} from '@apollo/client';
-import { signToken } from '../../../server/utils/auth';
 
 export const ADD_USER =gql`
 mutation addUser($username: String!, $email: String!, $password: String!){
