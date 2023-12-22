@@ -1,7 +1,7 @@
 {
   "name": "googlebooks-app",
   "version": "1.0.0",
-  "description": "",
+  "description": "# Description This is a Google based book search tool that will let the user search and save books to a list. Awoken from REST API, its been reforged like the shards of Narsil for GraphQL.",
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
@@ -21,7 +21,9 @@
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",
-    "graphql": "^16.8.1"
+    "cjs": "^0.0.11",
+    "graphql": "^16.8.1",
+    "mongoose": "^8.0.3"
   },
   "type": "module"
 }
